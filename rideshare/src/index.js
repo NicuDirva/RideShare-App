@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
+import "./styles.css"
+import HomePage from './components/HomePage';
 
 const router = createBrowserRouter([
   {
@@ -22,8 +24,16 @@ const router = createBrowserRouter([
   },
   {
     path: "signup",
-    element: <SignUp/>,
-  }
+    element: <div className='signUp'><SignUp/></div>,
+  },
+  {
+    path: "home",
+    element: <HomePage/>,
+  },
+  {
+    path: "welcome",
+    element: <App/>,
+  },
 
 ]);
 
