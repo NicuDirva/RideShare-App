@@ -3,7 +3,6 @@ import './App.css';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import { Link } from 'react-router-dom';
-import WelcomePage from './components/Pages/WelcomePage';
 
 
 function App() {
@@ -12,8 +11,6 @@ function App() {
       <div className='signIn'>
         <SignIn />
       </div>
-      {/* <li><Link to="signin" style={{ textDecoration: 'none' }}>Log In</Link></li>
-      <li><Link to="signup" style={{ textDecoration: 'none' }}>Create Account</Link></li> */}
     </div>
   );
 }

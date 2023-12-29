@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebase_auth';
 import { useNavigate, Link } from 'react-router-dom';
-import WelcomeNavBar from '../NavBars/WelcomeNavBar';
+import NavBar from '../NavBar';
 
 function SignIn() {
     const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ function SignIn() {
 
     return (
         <div>
-            <WelcomeNavBar />
+            <NavBar />
             <div className='sign-container'>
                 <div className='content-container'>
                     <form onSubmit={signIn}>

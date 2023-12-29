@@ -4,6 +4,8 @@
 
 body {
     margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 .nav {
@@ -47,3 +49,67 @@ body {
     border: 2px solid #000; /* Stilul, grosimea și culoarea bordurii */
     margin: 0 auto; /* Centralizează containerul */
 }
+
+.avatar_post {
+    vertical-align: middle;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border-width: 5px;
+}
+
+.main-container {
+    display: flex;
+    height: 100vh; /* Înălțimea completă a viewport-ului */
+  }
+  
+  .left-container,
+  .right-container {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .left-container {
+    background-color: #f2f2f2;
+  }
+  
+  .right-container {
+    background-color: #e6e6e6;
+  }
+  
+  .avatar-container {
+    text-align: center;
+  }
+  
+  .avatar {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  input[type='file'] {
+    margin-bottom: 10px;
+  }
+  
+  .information-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .information-container > p {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .description-container {
+    margin-bottom: 20px;
+  }
+  
+  /* Stilizare pentru a aranja email și phone unul lângă altul */
+  .information-container > div {
+    display: flex;
+    justify-content: space-between;
+  }

@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { auth, db} from '../../firebase_auth';
 import { useNavigate, Link } from 'react-router-dom';
-import WelcomeNavBar from '../NavBars/WelcomeNavBar';
 import { addDoc, collection } from 'firebase/firestore';
+import NavBar from '../NavBar';
 
 function SignUp() {
     const [email, setEmail] = useState('');
@@ -37,7 +37,7 @@ function SignUp() {
 
     return (
         <div>
-            <WelcomeNavBar />
+            <NavBar/>
             <div className='sign-container'>
                 <div className='content-container'>
                     <form onSubmit={signUp}>

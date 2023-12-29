@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { auth } from '../../firebase_auth';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import WelcomePage from './WelcomePage';
-import NavBar from '../NavBars/NavBar';
+import NavBar from '../NavBar';
 
 function HomePage() {
     const [authUser, setAuthUser] = useState(null);
