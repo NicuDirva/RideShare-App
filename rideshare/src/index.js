@@ -11,7 +11,8 @@ import {
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import "./styles.css"
-import HomePage from './components/HomePage';
+import HomePage from './components/Pages/HomePage';
+import Profile from './components/Pages/ProfilePage';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "welcome",
     element: <App/>,
+  },
+  {
+    path: "profile",
+    element: <Profile/>,
   },
 
 ]);

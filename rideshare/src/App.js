@@ -2,9 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
-import AuthDetails from './components/auth/AuthDetails';
 import { Link } from 'react-router-dom';
-import WelcomePage from './components/WelcomePage';
+import WelcomePage from './components/Pages/WelcomePage';
 
 
 function App() {

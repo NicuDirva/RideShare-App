@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom'
-import SignIn from './auth/SignIn'
-import AuthDetails from './auth/AuthDetails'
+import SignIn from '../auth/SignIn'
 import HomePage from './HomePage';
 import React, { useEffect, useState } from 'react'
-import auth from '../firebase';
+import { auth } from '../../firebase_auth';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 
@@ -12,27 +11,18 @@ function WelcomePage() {
 
     useEffect(() => {
         const listen = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setAuthUser(user)
-            } else {
-                setAuthUser(null)
-            }
+          if (user) {
+            setAuthUser(user);
+          }
+          else {
+            setAuthUser(null);
+          }
         });
-
-        return () => {
-            listen();
-        }
-    }, []);
-
-
+      }, []);
+      
     return (
         <div>
-
-            <div className='signIn'>
-                <SignIn />
-            </div>
-
-
+            <SignIn />
         </div>
 
     )

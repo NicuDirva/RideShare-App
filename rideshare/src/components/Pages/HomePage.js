@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import auth from '../firebase';
+import { auth } from '../../firebase_auth';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import WelcomePage from './WelcomePage';
-import NavBar from './NavBar';
+import NavBar from '../NavBars/NavBar';
 
 function HomePage() {
     const [authUser, setAuthUser] = useState(null);
 
     useEffect(() => {
-        const listen = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setAuthUser(user)
-            } else {
-                setAuthUser(null)
-            }
-        });
-
-        return () => {
-            listen();
+      const listen = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setAuthUser(user);
         }
+        else {
+          setAuthUser(null);
+        }
+      });
     }, []);
-
+    
   return (
     <div>
         {
@@ -29,10 +26,10 @@ function HomePage() {
 
             <div>
                 <NavBar />
-                <p>{`Welcome ${authUser.email}`}</p>
+                <p>Home Page</p>
             </div>
         </>
-        : <WelcomePage />
+        : <p>Loading...</p>
         }
     </div>
   )

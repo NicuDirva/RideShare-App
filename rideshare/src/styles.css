@@ -28,10 +28,22 @@ body {
     list-style: none;
 }
 
-/* .signUp .signIn {
-    align-items:flex-end;
-} */
-.sign-in-container .sign-up-container{
-    align-items:flex-end;
+.sign-container {
+    text-align: center;
+    display: flex;
 }
 
+.sign-container form {
+    display: inline-block;
+    text-align: center;
+    margin-top: 30px;
+
+}
+
+.content-container {
+    height: 400px;
+    width: 500px; /* Ajustează la lățimea dorită */
+    padding: 20px; /* Ajustează la spațiul dorit între conținut și bordură */
+    border: 2px solid #000; /* Stilul, grosimea și culoarea bordurii */
+    margin: 0 auto; /* Centralizează containerul */
+}
