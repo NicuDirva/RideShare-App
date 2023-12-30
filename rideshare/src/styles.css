@@ -113,3 +113,23 @@ body {
     display: flex;
     justify-content: space-between;
   }
+
+  .rides-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Spațiere între ride-uri */
+  }
+  
+  .ride-container {
+    background-color: #f0f0f0; /* Culoarea fundalului pentru fiecare ride */
+    padding: 16px; /* Margine pentru fiecare ride */
+    width: calc(50% - 16px); /* Lățime de 50% cu spațiere între ride-uri */
+    margin-bottom: 16px; /* Spațiere între ride-uri pe verticală */
+  }
+  
+  .first-div,
+  .second-div,
+  .third-div {
+    display: flex;
+    justify-content: space-between;
+  }
