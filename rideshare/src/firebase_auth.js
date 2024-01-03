@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"
+import { collection, getDocs, getFirestore, query, updateDoc, where } from "firebase/firestore"
 import { useEffect, useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage'
 // TODO: Add SDKs for Firebase products that you want to use
@@ -46,8 +46,25 @@ async function upload (file, currentUser, setLoading) {
 
   const snapshot = await uploadBytes(fileRef, file);
 
-
   const photoURL = await getDownloadURL(fileRef);
+
+/////
+
+const uid = currentUser.uid;
+const q = query(collection(db, 'Profile'), where('id', '==', uid));
+const querySnapshot = await getDocs(q);
+
+if (querySnapshot.size > 0) {
+  const userDocSnapshot = querySnapshot.docs[0];
+  const profileRef = userDocSnapshot.ref;
+
+  // Actualizează nickname-ul în baza de date
+  await updateDoc(profileRef, {
+    imgURL: photoURL,
+  });
+}
+///////////
+
   updateProfile(currentUser, {photoURL});
 
   setLoading(false);

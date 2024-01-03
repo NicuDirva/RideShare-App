@@ -89,6 +89,35 @@ body {
     border-radius: 50%;
     margin-bottom: 10px;
   }
+  .avatar {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    marg
+    
+    .display-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 16px;
+}
+
+.profile-info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.avatar_post {
+  width: 100px; /* Ajustează dimensiunea imaginii de profil după necesități */
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}in-bottom: 10px;
+  }
+  
   
   input[type='file'] {
     margin-bottom: 10px;
@@ -125,6 +154,7 @@ body {
     padding: 16px; /* Margine pentru fiecare ride */
     width: calc(50% - 16px); /* Lățime de 50% cu spațiere între ride-uri */
     margin-bottom: 16px; /* Spațiere între ride-uri pe verticală */
+    
   }
   
   .first-div,
@@ -133,3 +163,88 @@ body {
     display: flex;
     justify-content: space-between;
   }
+
+  
+  .profile-info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    border-bottom: 1px solid #000;
+  }
+
+  .profile-info-row > div {
+    width: 100%; /* Setează lățimea div-urilor la 100% */
+    margin-bottom: 8px; /* Spațiu între div-uri */
+    box-sizing: border-box; /* Asigură că padding-ul și border-ul sunt incluse în lățimea totală */
+
+  }
+
+  .profile-info-row > div > div {
+    border: 2px;
+    border-color: #000;
+  }
+  .search-profile-container {
+    margin: 10px;
+    border: 1px solid #000;
+  }
+  
+  .avatar_post {
+    width: 100px; /* Ajustează dimensiunea imaginii de profil după necesități */
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
+
+  
+
+
+  .riders-img {
+    display: flex; /* Așezarea elementelor într-un rând folosind flexbox */
+  }
+  
+  .riders-img > div {
+    margin-right: 10px; /* Spațiu între imaginile riderilor */
+  }
+  
+  .riders-img > div:last-child {
+    margin-right: 0; /* Elimină spațiul după ultimul div */
+  }
+  
+  .riders-img img {
+    width: 50px; /* Ajustează lățimea imaginilor la nevoie */
+    height: 50px; /* Ajustează înălțimea imaginilor la nevoie */
+  }
+
+  .fiveth-div img {
+    width: 50px; /* Ajustează lățimea imaginilor la nevoie */
+    height: 50px; 
+  }
+
+  .ride-participants-info {
+    display: flex;
+  }
+
+  .fiveth-div,
+.fourth-div {
+  flex: 1; /* Distribuie spațiul disponibil egal între cele două div-uri */
+  margin-right: 16px; /* Adaugă un spațiu între cele două div-uri (poate fi ajustat) */
+}
+
+.riders-img > div:last-child {
+  margin-right: 0;
+}
+
+.my-button {
+  background-color: #333; /* culoare de fundal verde */
+  color: white; /* text alb */
+  padding: 10px 20px; /* margini interioare */
+  font-size: 16px; /* dimensiunea fontului */
+  border: none; /* elimină bordura */
+  cursor: pointer; /* indicator de cursor */
+  margin-bottom: 20px;
+}
+
+.search-profile-container {
+  border: 2px;
+  border-color: #000;
+}

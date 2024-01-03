@@ -6,18 +6,36 @@ import reportWebVitals from './reportWebVitals';
 import { AuthProvider, useAuth } from 'react-auth-kit';
 import {
   createBrowserRouter,
+  Route,
+  Router,
   RouterProvider,
+  Routes,
 } from "react-router-dom";
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import "./styles.css"
 import HomePage from './components/Pages/HomePage';
 import Profile from './components/Pages/ProfilePage';
+import VisitProfile from './components/Pages/SearchProfile';
+import SearchBar from './components/SearchBar';
+import ClickPhoto from './components/ClickPhoto';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
+  },
+  {
+    path: "visit-profile/:nickname",
+    element: <VisitProfile />,
+  },
+  {
+    path: "click-photo/:id",
+    element: <ClickPhoto />,
+  },
+  {
+    path: "search",
+    element: <div className='signUp'><SearchBar /></div>,
   },
   {
     path: "signin",
@@ -26,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "signup",
     element: <div className='signUp'><SignUp/></div>,
+  },
+  {
+    path: "search",
+    element: <div className='signUp'><VisitProfile/></div>,
   },
   {
     path: "home",
@@ -53,3 +75,4 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+

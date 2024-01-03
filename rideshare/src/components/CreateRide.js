@@ -1,13 +1,12 @@
-import React, {  Component,useEffect, useState } from 'react';
-import { collection, addDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { collection, addDoc, query, where, getDoc, getDocs, doc } from 'firebase/firestore';
 import { db } from '../firebase_auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase_auth';
 import HomePage from './Pages/HomePage';
-import Profile from './Pages/ProfilePage';
 
-function CreateRideForm (props) {
-    const [authUser, setAuthUser] = useState(null);
+function CreateRideForm(props) {
+  const [authUser, setAuthUser] = useState(null);
   const [sourceLocation, setSourceLocation] = useState('');
   const [destinationLocation, setDestinationLocation] = useState('');
   const [departureTime, setDepartureTime] = useState('');
@@ -15,14 +14,14 @@ function CreateRideForm (props) {
   const [availableSeats, setAvailableSeats] = useState('');
   const [departureData, setDepartureData] = useState('');
   const [creatorId, setCreatorId] = useState('');
+  const [creatorPhotoURL, setCreatorPhotoURL] = useState('');
+  const [isVisible, setIsVisible] = useState(true);
 
-
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validare sau alte verificări pot fi adăugate aici înainte de a adăuga datele în baza de date
-
+  
     try {
-      // Adaugă un nou document în colecția "Ride"
+      // Adaugă un nou document în colecția "Ride", inclusiv un câmp "members" cu un array gol
       const docRef = await addDoc(collection(db, 'Ride'), {
         source_location: sourceLocation,
         destination_location: destinationLocation,
@@ -30,11 +29,13 @@ function CreateRideForm (props) {
         arrival_time: arrivalTime,
         available_seats: availableSeats,
         departure_data: departureData,
-        creator_id: creatorId, 
+        creator_id: creatorId,
+        creator_photo_url: creatorPhotoURL,
+        members: [] // Adaugă câmpul "members" cu un array gol
       });
-
+  
       console.log('Document adăugat cu ID:', docRef.id);
-
+  
       // Resetarea stării formularului după adăugarea cu succes
       setSourceLocation('');
       setDestinationLocation('');
@@ -42,10 +43,11 @@ function CreateRideForm (props) {
       setArrivalTime('');
       setAvailableSeats('');
       setDepartureData('');
+      setIsVisible(false);
     } catch (error) {
       console.error('Eroare la adăugarea documentului:', error);
     }
-    
+  
     if (props && props.onSubmit && Array.isArray(props.onSubmit) && props.onSubmit.length > 0) {
       props.onSubmit[0]({
         source_location: sourceLocation,
@@ -55,16 +57,48 @@ function CreateRideForm (props) {
         available_seats: availableSeats,
         departure_data: departureData,
         creator_id: creatorId,
+        creator_photo_url: creatorPhotoURL,
+        members: [] // Adaugă câmpul "members" cu un array gol în obiectul trimis prin onSubmit
       });
     }
   };
 
+  const handleCancel = () => {
+    console.log('Cancel button clicked'); // Adaugă acest rând
+    setIsVisible(false);
+    props.onActivate(); 
+  };
+
+
+
   useEffect(() => {
-    const listen = onAuthStateChanged(auth, (user) => {
+    const listen = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setAuthUser(user);
-        setCreatorId(user.uid);  // Actualizează creatorId cu ID-ul utilizatorului autentificat
-      } else {
+        setCreatorId(user.uid);
+        const id = user.uid;
+        console.log(`IDDDD: ${id}`)
+        const q = query(collection(db, 'Profile'), where('id', '==', id));
+        const querySnapshot = await getDocs(q);
+
+        // Verifică dacă există vreun document în rezultatele query-ului
+        if (querySnapshot.size > 0) {
+          const userDocSnapshot = querySnapshot.docs[0];
+          const profileData = userDocSnapshot.data();
+        
+          // Verifică dacă imgURL este definit
+          if (profileData && profileData.imgURL) {
+            setCreatorPhotoURL(profileData.imgURL);
+            console.log(`URLLLLL: ${profileData.imgURL}`);
+          } else {
+            console.log('imgURL nu este definit în documentul găsit');
+          }
+        } else {
+          console.log('Documentul nu există');
+        }
+
+      }  // Actualizează creatorId cu ID-ul utilizatorului autentificat
+      else {
         setAuthUser(null);
         setCreatorId('');  // Dacă nu există utilizator autentificat, poți seta creatorId la o valoare implicită sau la '' (șir gol)
       }
@@ -74,12 +108,16 @@ function CreateRideForm (props) {
     }
   }, []);
 
+
   return (
+    <div>
+    {isVisible && (
     <form onSubmit={handleSubmit}>
-        <label>
+      <label>
         Departure data:
-        <input type="text" value={departureData} onChange={(e) => setDepartureData(e.target.value)} required />
+        <input type="date" value={departureData} onChange={(e) => setDepartureData(e.target.value)} required />
       </label>
+      <br />
       <label>
         Source Location:
         <input type="text" value={sourceLocation} onChange={(e) => setSourceLocation(e.target.value)} required />
@@ -102,12 +140,16 @@ function CreateRideForm (props) {
       <br />
       <label>
         Available Seats:
-        <input type="text" value={availableSeats} onChange={(e) => setAvailableSeats(e.target.value)} required />
+        <input type="number" value={availableSeats} onChange={(e) => setAvailableSeats(e.target.value)} required />
       </label>
       <br />
       <button type="submit">Submit</button>
+      <button type="button" onClick={handleCancel}>Cancel</button>
+
     </form>
+  )}
+  </div>
   );
 }
 
-export default CreateRideForm;
+export default CreateRideForm

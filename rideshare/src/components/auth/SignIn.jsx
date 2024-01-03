@@ -18,8 +18,18 @@ function SignIn() {
             })
             .catch((error) => {
                 console.log(error);
+    
+                // Tratează eroarea de autentificare incorectă
+                const errorCode = error.code;
+                const errorMessage = error.message;
+    
+                if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
+                    alert('Invalid email or password. Please try again.');
+                } else {
+                    alert(errorMessage);
+                }
             });
-    }
+    };
 
     return (
         <div>
