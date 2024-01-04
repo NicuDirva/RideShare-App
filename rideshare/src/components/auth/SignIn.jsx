@@ -18,11 +18,11 @@ function SignIn() {
             })
             .catch((error) => {
                 console.log(error);
-    
+
                 // Tratează eroarea de autentificare incorectă
                 const errorCode = error.code;
                 const errorMessage = error.message;
-    
+
                 if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
                     alert('Invalid email or password. Please try again.');
                 } else {
@@ -44,18 +44,14 @@ function SignIn() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         ></input>
-
-
                         <input
                             type='password'
                             placeholder='Password'
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         ></input>
-
                         <button type='submit'>Log In</button>
                     </form>
-
                     <div>
                         <Link to="/signup" style={{ textDecoration: 'none' }}>Don't have an account? Sign up</Link>
                     </div>

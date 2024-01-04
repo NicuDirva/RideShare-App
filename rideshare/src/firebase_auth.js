@@ -1,10 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { collection, getDocs, getFirestore, query, updateDoc, where } from "firebase/firestore"
 import { useEffect, useState } from "react";
-import { getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage'
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,7 +21,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
@@ -34,41 +32,83 @@ function useAuth() {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, user => setCurrentUser(user));
-  }, []) 
+  }, [])
 
   return currentUser;
 }
 
-async function upload (file, currentUser, setLoading) {
+async function upload(file, currentUser, setLoading) {
   const fileRef = ref(storage, currentUser.uid + '.png');
 
   setLoading(true);
-
   const snapshot = await uploadBytes(fileRef, file);
-
   const photoURL = await getDownloadURL(fileRef);
+  const uid = currentUser.uid;
+  const q = query(collection(db, 'Profile'), where('id', '==', uid));
+  const querySnapshot = await getDocs(q);
 
-/////
+  if (querySnapshot.size > 0) {
+    const userDocSnapshot = querySnapshot.docs[0];
+    const profileRef = userDocSnapshot.ref;
 
-const uid = currentUser.uid;
-const q = query(collection(db, 'Profile'), where('id', '==', uid));
-const querySnapshot = await getDocs(q);
+    // Actualizează nickname-ul în baza de date
+    await updateDoc(profileRef, {
+      imgURL: photoURL,
+    });
+  }
 
-if (querySnapshot.size > 0) {
-  const userDocSnapshot = querySnapshot.docs[0];
-  const profileRef = userDocSnapshot.ref;
+  updateProfile(currentUser, { photoURL });
 
-  // Actualizează nickname-ul în baza de date
-  await updateDoc(profileRef, {
-    imgURL: photoURL,
+
+
+
+  const q2 = query(collection(db, 'Ride'), where('creator_id', '==', currentUser.uid));
+  const querySnapshot1 = await getDocs(q2);
+
+  const updatePromises = [];
+
+  querySnapshot1.forEach((doc) => {
+    const rideRef = doc.ref;
+
+    // Adaugă promisiunea actualizării în array-ul de promisiuni
+    updatePromises.push(updateDoc(rideRef, { creator_photo_url: photoURL }));
   });
-}
-///////////
 
-  updateProfile(currentUser, {photoURL});
+  // Așteaptă ca toate promisiunile de actualizare să se încheie
+  await Promise.all(updatePromises);
+
+  // Facem update și la ride-urile ale căror e membru
+  const memberQuery = query(collection(db, 'Ride'), where('members', 'array-contains', currentUser.uid));
+  const memberQuerySnapshot = await getDocs(memberQuery);
+  const memberUpdatePromises = memberQuerySnapshot.docs.map(async (doc) => {
+    const rideRef = doc.ref;
+    console.log(`CREATORRRRRR IDDDDD: ${doc.data.creator_id}`);
+  
+    if (doc.data().members && Array.isArray(doc.data().members)) {
+      const updatedMembers = doc.data().members.map((member) => {
+        if (member.memberId === currentUser.uid) {
+          console.log(`Member IDDDDD: ${currentUser.uid}`);
+          return { ...member, memberURL: photoURL };
+        }
+        return member;
+      });
+  
+      // Actualizează câmpul "members" în Firestore
+      await updateDoc(rideRef, { members: updatedMembers });
+    } else {
+      console.error('members nu este definit sau nu este un array', doc.id);
+    }
+  });
+  
+  // Așteaptă ca toate promisiunile de actualizare să se încheie
+  await Promise.all(memberUpdatePromises);
+
+
+
+
 
   setLoading(false);
   alert("Uploaded file!");
 }
 
-export {db, auth, useAuth, upload}
+export { db, auth, useAuth, upload }

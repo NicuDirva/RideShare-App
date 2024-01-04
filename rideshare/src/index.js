@@ -3,13 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { AuthProvider, useAuth } from 'react-auth-kit';
 import {
   createBrowserRouter,
-  Route,
-  Router,
   RouterProvider,
-  Routes,
 } from "react-router-dom";
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
@@ -23,11 +19,12 @@ import ClickPhoto from './components/ClickPhoto';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
   },
   {
     path: "visit-profile/:nickname",
     element: <VisitProfile />,
+
   },
   {
     path: "click-photo/:id",
@@ -39,27 +36,27 @@ const router = createBrowserRouter([
   },
   {
     path: "signin",
-    element: <SignIn/>,
+    element: <SignIn />,
   },
   {
     path: "signup",
-    element: <div className='signUp'><SignUp/></div>,
+    element: <div className='signUp'><SignUp /></div>,
   },
   {
     path: "search",
-    element: <div className='signUp'><VisitProfile/></div>,
+    element: <div className='signUp'><VisitProfile /></div>,
   },
   {
     path: "home",
-    element: <HomePage/>,
+    element: <HomePage />,
   },
   {
     path: "welcome",
-    element: <App/>,
+    element: <App />,
   },
   {
     path: "profile",
-    element: <Profile/>,
+    element: <Profile />,
   },
 
 ]);

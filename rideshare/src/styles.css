@@ -1,250 +1,286 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 .nav {
-    background-color: #333;
-    color: aliceblue;
-    display: flex;
-    align-items:center;
-    padding: 0 1rem;
-    justify-content: space-between;
+  background-color: #333;
+  color: aliceblue;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  justify-content: space-between;
 }
 
 .nav a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 .nav ul {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 1rem;
-    list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 1rem;
+  list-style: none;
 }
 
 .sign-container {
-    text-align: center;
-    display: flex;
+  text-align: center;
+  display: flex;
 }
 
 .sign-container form {
-    display: inline-block;
-    text-align: center;
-    margin-top: 30px;
+  display: inline-block;
+  text-align: center;
+  margin-top: 30px;
 
 }
 
 .content-container {
-    height: 400px;
-    width: 500px; /* Ajustează la lățimea dorită */
-    padding: 20px; /* Ajustează la spațiul dorit între conținut și bordură */
-    border: 2px solid #000; /* Stilul, grosimea și culoarea bordurii */
-    margin: 0 auto; /* Centralizează containerul */
+  height: 400px;
+  width: 500px;
+  /* Ajustează la lățimea dorită */
+  padding: 20px;
+  /* Ajustează la spațiul dorit între conținut și bordură */
+  border: 2px solid #000;
+  /* Stilul, grosimea și culoarea bordurii */
+  margin: 0 auto;
+  /* Centralizează containerul */
 }
 
 .avatar_post {
-    vertical-align: middle;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border-width: 5px;
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border-width: 5px;
 }
 
 .main-container {
-    display: flex;
-    height: 100vh; /* Înălțimea completă a viewport-ului */
-  }
-  
-  .left-container,
-  .right-container {
-    flex: 1;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  .left-container {
-    background-color: #f2f2f2;
-  }
-  
-  .right-container {
-    background-color: #e6e6e6;
-  }
-  
-  .avatar-container {
-    text-align: center;
-  }
-  
-  .avatar {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
-  .avatar {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    marg
-    
-    .display-profile-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #ccc;
-  padding: 16px;
+  height: 100vh;
+  /* Înălțimea completă a viewport-ului */
 }
 
-.profile-info-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
+.left-container,
+.right-container {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.avatar_post {
-  width: 100px; /* Ajustează dimensiunea imaginii de profil după necesități */
-  height: 100px;
+.left-container {
+  background-color: #f2f2f2;
+}
+
+.right-container {
+  background-color: #e6e6e6;
+}
+
+.avatar-container {
+  text-align: center;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
   border-radius: 50%;
-  margin-bottom: 8px;
-}in-bottom: 10px;
-  }
-  
-  
-  input[type='file'] {
-    margin-bottom: 10px;
-  }
-  
-  .information-container {
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+
+  marg .display-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border: 1px solid #ccc;
-    padding: 10px;
-  }
-  
-  .information-container > p {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .description-container {
-    margin-bottom: 20px;
-  }
-  
-  /* Stilizare pentru a aranja email și phone unul lângă altul */
-  .information-container > div {
-    display: flex;
-    justify-content: space-between;
+    padding: 16px;
   }
 
-  .rides-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px; /* Spațiere între ride-uri */
-  }
-  
-  .ride-container {
-    background-color: #f0f0f0; /* Culoarea fundalului pentru fiecare ride */
-    padding: 16px; /* Margine pentru fiecare ride */
-    width: calc(50% - 16px); /* Lățime de 50% cu spațiere între ride-uri */
-    margin-bottom: 16px; /* Spațiere între ride-uri pe verticală */
-    
-  }
-  
-  .first-div,
-  .second-div,
-  .third-div {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  
   .profile-info-row {
     display: flex;
     justify-content: space-between;
     margin-top: 8px;
-    border-bottom: 1px solid #000;
   }
 
-  .profile-info-row > div {
-    width: 100%; /* Setează lățimea div-urilor la 100% */
-    margin-bottom: 8px; /* Spațiu între div-uri */
-    box-sizing: border-box; /* Asigură că padding-ul și border-ul sunt incluse în lățimea totală */
-
-  }
-
-  .profile-info-row > div > div {
-    border: 2px;
-    border-color: #000;
-  }
-  .search-profile-container {
-    margin: 10px;
-    border: 1px solid #000;
-  }
-  
   .avatar_post {
-    width: 100px; /* Ajustează dimensiunea imaginii de profil după necesități */
+    width: 100px;
+    /* Ajustează dimensiunea imaginii de profil după necesități */
     height: 100px;
     border-radius: 50%;
     margin-bottom: 8px;
   }
 
-  
-
-
-  .riders-img {
-    display: flex; /* Așezarea elementelor într-un rând folosind flexbox */
-  }
-  
-  .riders-img > div {
-    margin-right: 10px; /* Spațiu între imaginile riderilor */
-  }
-  
-  .riders-img > div:last-child {
-    margin-right: 0; /* Elimină spațiul după ultimul div */
-  }
-  
-  .riders-img img {
-    width: 50px; /* Ajustează lățimea imaginilor la nevoie */
-    height: 50px; /* Ajustează înălțimea imaginilor la nevoie */
-  }
-
-  .fiveth-div img {
-    width: 50px; /* Ajustează lățimea imaginilor la nevoie */
-    height: 50px; 
-  }
-
-  .ride-participants-info {
-    display: flex;
-  }
-
-  .fiveth-div,
-.fourth-div {
-  flex: 1; /* Distribuie spațiul disponibil egal între cele două div-uri */
-  margin-right: 16px; /* Adaugă un spațiu între cele două div-uri (poate fi ajustat) */
+  in-bottom: 10px;
 }
 
-.riders-img > div:last-child {
+
+input[type='file'] {
+  margin-bottom: 10px;
+}
+
+.information-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.information-container>p {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.description-container {
+  margin-bottom: 20px;
+}
+
+/* Stilizare pentru a aranja email și phone unul lângă altul */
+.information-container>div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rides-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  /* Spațiere între ride-uri */
+}
+
+.ride-container {
+  background-color: #f0f0f0;
+  /* Culoarea fundalului pentru fiecare ride */
+  padding: 16px;
+  /* Margine pentru fiecare ride */
+  width: calc(50% - 16px);
+  /* Lățime de 50% cu spațiere între ride-uri */
+  margin-bottom: 16px;
+  /* Spațiere între ride-uri pe verticală */
+
+}
+
+.first-div,
+.second-div,
+.third-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.profile-info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  border-bottom: 1px solid #000;
+}
+
+.profile-info-row>div {
+  width: 100%;
+  /* Setează lățimea div-urilor la 100% */
+  margin-bottom: 8px;
+  /* Spațiu între div-uri */
+  box-sizing: border-box;
+  /* Asigură că padding-ul și border-ul sunt incluse în lățimea totală */
+
+}
+
+.profile-info-row>div>div {
+  border: 2px;
+  border-color: #000;
+}
+
+.search-profile-container {
+  margin: 10px;
+  border: 1px solid #000;
+}
+
+.avatar_post {
+  width: 100px;
+  /* Ajustează dimensiunea imaginii de profil după necesități */
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+
+
+
+.riders-img {
+  display: flex;
+  /* Așezarea elementelor într-un rând folosind flexbox */
+}
+
+.riders-img>div {
+  margin-right: 10px;
+  /* Spațiu între imaginile riderilor */
+}
+
+.riders-img>div:last-child {
+  margin-right: 0;
+  /* Elimină spațiul după ultimul div */
+}
+
+.riders-img img {
+  width: 50px;
+  /* Ajustează lățimea imaginilor la nevoie */
+  height: 50px;
+  /* Ajustează înălțimea imaginilor la nevoie */
+}
+
+.fiveth-div img {
+  width: 50px;
+  /* Ajustează lățimea imaginilor la nevoie */
+  height: 50px;
+}
+
+.ride-participants-info {
+  display: flex;
+}
+
+.fiveth-div,
+.fourth-div {
+  flex: 1;
+  /* Distribuie spațiul disponibil egal între cele două div-uri */
+  margin-right: 16px;
+  /* Adaugă un spațiu între cele două div-uri (poate fi ajustat) */
+}
+
+.riders-img>div:last-child {
   margin-right: 0;
 }
 
 .my-button {
-  background-color: #333; /* culoare de fundal verde */
-  color: white; /* text alb */
-  padding: 10px 20px; /* margini interioare */
-  font-size: 16px; /* dimensiunea fontului */
-  border: none; /* elimină bordura */
-  cursor: pointer; /* indicator de cursor */
+  background-color: #333;
+  /* culoare de fundal verde */
+  color: white;
+  /* text alb */
+  padding: 10px 20px;
+  /* margini interioare */
+  font-size: 16px;
+  /* dimensiunea fontului */
+  border: none;
+  /* elimină bordura */
+  cursor: pointer;
+  /* indicator de cursor */
   margin-bottom: 20px;
 }
 
 .search-profile-container {
   border: 2px;
   border-color: #000;
+}
+
+.forms-container {
+  padding: 10px;
 }

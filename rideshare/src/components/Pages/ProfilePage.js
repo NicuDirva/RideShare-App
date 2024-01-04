@@ -3,6 +3,7 @@ import { collection, query, where, getDocs, updateDoc } from 'firebase/firestore
 import { auth, db, useAuth, upload } from '../../firebase_auth';
 import NavBar from '../NavBar';
 import { onAuthStateChanged } from 'firebase/auth';
+import SignIn from '../auth/SignIn';
 
 function Profile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -184,7 +185,7 @@ function Profile() {
     const memberUpdatePromises = memberQuerySnapshot.docs.map(async (doc) => {
       const rideRef = doc.ref;
       console.log(`CREATORRRRRR IDDDDD: ${doc.data.creator_id}`);
-    
+
       if (doc.data().members && Array.isArray(doc.data().members)) {
         const updatedMembers = doc.data().members.map((member) => {
           if (member.memberId === currentUser.uid) {
@@ -193,66 +194,72 @@ function Profile() {
           }
           return member;
         });
-    
+
         // Actualizează câmpul "members" în Firestore
         await updateDoc(rideRef, { members: updatedMembers });
       } else {
         console.error('members nu este definit sau nu este un array', doc.id);
       }
     });
-    
+
     // Așteaptă ca toate promisiunile de actualizare să se încheie
     await Promise.all(memberUpdatePromises);
   }
 
   return (
     <div>
-      <NavBar />
-      {userProfile ? (
-        <div className='main-container'>
-          <div className='left-container'>
-            <div className='avatar-container'>
-              <img alt='Avatar' className='avatar' src={photoURL} />
-              <br/>
-              <input onChange={changeAvatar} type='file' />
-              <button disabled={loading || !photo} onClick={uploadAvatar}>Upload</button>
-            </div>
-            <br />
-            <br />
-            <div className='nickname-container'>
-              <p>Nickname: {userProfile.nickname}</p>
-              <input type='text' placeholder='New Nickname' value={newNickname} onChange={(e) => setNewNickname(e.target.value)} />
-              <button onClick={handleNicknameChange}>Change Nickname</button>
-            </div>
-            <br />
-            <br />
-            <div className='description-container'>
-              <p>Description: {userProfile.description}</p>
-              <input type='text' placeholder='New Description' value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
-              <button onClick={handleDescriptionChange}>Change Description</button>
-            </div>
-          </div>
-          <div className='right-container'>
-            <div className='information-container'>
-              <p>Information:</p>
-              <div>
-                <div>
-                  <p>Email</p>
-                  <p>{userProfile.email}</p>
+      {authUser ?
+        <div>
+          <NavBar />
+          {userProfile ? (
+            <div className='main-container'>
+              <div className='left-container'>
+                <div className='avatar-container'>
+                  <img alt='Avatar' className='avatar' src={photoURL} />
+                  <br />
+                  <input onChange={changeAvatar} type='file' />
+                  <button disabled={loading || !photo} onClick={uploadAvatar}>Upload</button>
                 </div>
-                <div>
-                  <p>Phone</p>
-                  <p>{userProfile.phone}</p>
-                  <input type='text' placeholder='New Phone' value={newPhone} onChange={(e) => setNewPhone(e.target.value)} />
-                  <button onClick={handlePhoneChange}>Change Phone</button>
+                <br />
+                <br />
+                <div className='nickname-container'>
+                  <p>Nickname: {userProfile.nickname}</p>
+                  <input type='text' placeholder='New Nickname' value={newNickname} onChange={(e) => setNewNickname(e.target.value)} />
+                  <button onClick={handleNicknameChange}>Change Nickname</button>
+                </div>
+                <br />
+                <br />
+                <div className='description-container'>
+                  <p>Description: {userProfile.description}</p>
+                  <input type='text' placeholder='New Description' value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+                  <button onClick={handleDescriptionChange}>Change Description</button>
+                </div>
+              </div>
+              <div className='right-container'>
+                <div className='information-container'>
+                  <p>Information:</p>
+                  <div>
+                    <div>
+                      <p>Email</p>
+                      <p>{userProfile.email}</p>
+                    </div>
+                    <div>
+                      <p>Phone</p>
+                      <p>{userProfile.phone}</p>
+                      <input type='text' placeholder='New Phone' value={newPhone} onChange={(e) => setNewPhone(e.target.value)} />
+                      <button onClick={handlePhoneChange}>Change Phone</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+        :
+        <SignIn />
+      }
     </div>
   );
 }

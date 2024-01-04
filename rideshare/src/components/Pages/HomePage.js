@@ -6,6 +6,7 @@ import { collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } 
 import { db } from '../../firebase_auth';
 import CreateRideForm from '../CreateRide';
 import { useNavigate } from 'react-router-dom';
+import SignIn from '../auth/SignIn';
 
 function HomePage() {
   const [authUser, setAuthUser] = useState(null);
@@ -31,7 +32,10 @@ function HomePage() {
       await deleteDoc(doc(db, 'Ride', rideId));
 
       // Actualizează starea pentru a reflecta ștergerea ride-ului
-      setRidesData((ridesData) => ridesData.filter(ride => ride.data.id !== rideId));
+      console.log('RidesData înainte de ștergere:', ridesData);
+      await setRidesData((ridesData) => ridesData.filter(ride => ride.id !== rideId));
+    
+      console.log('RidesData după ștergere:', ridesData);
     } catch (error) {
       console.error('Eroare la ștergerea ride-ului:', error);
     }
@@ -278,7 +282,7 @@ function HomePage() {
             <h2>Rides:</h2>
 
             {showCreateRideForm ? (
-              <CreateRideForm onSubmit={[handleCreateRideSubmit, handleAddRide]} onActivate={handleActivate}/>
+              <CreateRideForm onSubmit={[handleCreateRideSubmit, handleAddRide]} onActivate={handleActivate} />
             ) : (
               <button className='my-button' onClick={handleCreateRide}>Creează Ride</button>
             )}
@@ -349,7 +353,7 @@ function HomePage() {
 
 
           </div>
-          : <p>Loading...</p>
+          : <SignIn/>
       }
     </div>
   )

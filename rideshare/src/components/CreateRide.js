@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { collection, addDoc, query, where, getDoc, getDocs, doc } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase_auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase_auth';
-import HomePage from './Pages/HomePage';
+import SignIn from './auth/SignIn';
 
 function CreateRideForm(props) {
   const [authUser, setAuthUser] = useState(null);
@@ -17,9 +17,9 @@ function CreateRideForm(props) {
   const [creatorPhotoURL, setCreatorPhotoURL] = useState('');
   const [isVisible, setIsVisible] = useState(true);
 
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       // Adaugă un nou document în colecția "Ride", inclusiv un câmp "members" cu un array gol
       const docRef = await addDoc(collection(db, 'Ride'), {
@@ -33,9 +33,25 @@ const handleSubmit = async (e) => {
         creator_photo_url: creatorPhotoURL,
         members: [] // Adaugă câmpul "members" cu un array gol
       });
-  
+
+      const newRide = {
+        id: docRef.id,
+        data: {
+          source_location: sourceLocation,
+          destination_location: destinationLocation,
+          departure_time: departureTime,
+          arrival_time: arrivalTime,
+          available_seats: availableSeats,
+          departure_data: departureData,
+          creator_id: creatorId,
+          creator_photo_url: creatorPhotoURL,
+          members: [] // Adaugă câmpul "members" cu un array gol
+        },
+      };
+
       console.log('Document adăugat cu ID:', docRef.id);
-  
+      props.onSubmit[1](newRide);
+
       // Resetarea stării formularului după adăugarea cu succes
       setSourceLocation('');
       setDestinationLocation('');
@@ -47,7 +63,7 @@ const handleSubmit = async (e) => {
     } catch (error) {
       console.error('Eroare la adăugarea documentului:', error);
     }
-  
+
     if (props && props.onSubmit && Array.isArray(props.onSubmit) && props.onSubmit.length > 0) {
       props.onSubmit[0]({
         source_location: sourceLocation,
@@ -66,10 +82,8 @@ const handleSubmit = async (e) => {
   const handleCancel = () => {
     console.log('Cancel button clicked'); // Adaugă acest rând
     setIsVisible(false);
-    props.onActivate(); 
+    props.onActivate();
   };
-
-
 
   useEffect(() => {
     const listen = onAuthStateChanged(auth, async (user) => {
@@ -85,7 +99,7 @@ const handleSubmit = async (e) => {
         if (querySnapshot.size > 0) {
           const userDocSnapshot = querySnapshot.docs[0];
           const profileData = userDocSnapshot.data();
-        
+
           // Verifică dacă imgURL este definit
           if (profileData && profileData.imgURL) {
             setCreatorPhotoURL(profileData.imgURL);
@@ -108,47 +122,52 @@ const handleSubmit = async (e) => {
     }
   }, []);
 
-
   return (
     <div>
-    {isVisible && (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Departure data:
-        <input type="date" value={departureData} onChange={(e) => setDepartureData(e.target.value)} required />
-      </label>
-      <br />
-      <label>
-        Source Location:
-        <input type="text" value={sourceLocation} onChange={(e) => setSourceLocation(e.target.value)} required />
-      </label>
-      <br />
-      <label>
-        Destination Location:
-        <input type="text" value={destinationLocation} onChange={(e) => setDestinationLocation(e.target.value)} required />
-      </label>
-      <br />
-      <label>
-        Departure Time:
-        <input type="text" value={departureTime} onChange={(e) => setDepartureTime(e.target.value)} required />
-      </label>
-      <br />
-      <label>
-        Arrival Time:
-        <input type="text" value={arrivalTime} onChange={(e) => setArrivalTime(e.target.value)} required />
-      </label>
-      <br />
-      <label>
-        Available Seats:
-        <input type="number" value={availableSeats} onChange={(e) => setAvailableSeats(e.target.value)} required />
-      </label>
-      <br />
-      <button type="submit">Submit</button>
-      <button type="button" onClick={handleCancel}>Cancel</button>
+      {authUser ?
+        isVisible && (
+          <div className='forms-container'>
+            <form onSubmit={handleSubmit}>
+              <label>
+                Departure data:
+                <input type="date" value={departureData} onChange={(e) => setDepartureData(e.target.value)} required />
+              </label>
+              <br />
+              <label>
+                Source Location:
+                <input type="text" value={sourceLocation} onChange={(e) => setSourceLocation(e.target.value)} required />
+              </label>
+              <br />
+              <label>
+                Destination Location:
+                <input type="text" value={destinationLocation} onChange={(e) => setDestinationLocation(e.target.value)} required />
+              </label>
+              <br />
+              <label>
+                Departure Time:
+                <input type="text" value={departureTime} onChange={(e) => setDepartureTime(e.target.value)} required />
+              </label>
+              <br />
+              <label>
+                Arrival Time:
+                <input type="text" value={arrivalTime} onChange={(e) => setArrivalTime(e.target.value)} required />
+              </label>
+              <br />
+              <label>
+                Available Seats:
+                <input type="number" value={availableSeats} onChange={(e) => setAvailableSeats(e.target.value)} required />
+              </label>
+              <br />
+              <button type="submit">Submit</button>
+              <button type="button" onClick={handleCancel}>Cancel</button>
 
-    </form>
-  )}
-  </div>
+            </form>
+          </div>
+        )
+        :
+        <SignIn />
+      }
+    </div>
   );
 }
 

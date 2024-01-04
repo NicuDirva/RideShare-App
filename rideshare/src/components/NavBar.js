@@ -9,6 +9,7 @@ function NavBar() {
   const [userProfile, setUserProfile] = useState(null);
   const [authUser, setAuthUser] = useState(null);
   const currentUser = useAuth();
+  
   useEffect(() => {
     const getUserProfile = async () => {
       try {
@@ -58,8 +59,8 @@ function NavBar() {
           <nav className='nav'>
             <h1>Ride~Share</h1>
             <ul>
-            <li>Hi {userProfile?.nickname}</li>
-              <li><SearchBar/></li>
+              <li>Hi {userProfile?.nickname}</li>
+              <li><SearchBar /></li>
               <li><a href='/home'>Home</a></li>
               <li><a href='/profile'>Profile</a></li>
               <li><a href='/welcome' onClick={userSingOut}>Sign Out</a></li>
