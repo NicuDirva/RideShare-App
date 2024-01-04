@@ -58,10 +58,6 @@ async function upload(file, currentUser, setLoading) {
   }
 
   updateProfile(currentUser, { photoURL });
-
-
-
-
   const q2 = query(collection(db, 'Ride'), where('creator_id', '==', currentUser.uid));
   const querySnapshot1 = await getDocs(q2);
 
@@ -102,11 +98,6 @@ async function upload(file, currentUser, setLoading) {
   
   // Așteaptă ca toate promisiunile de actualizare să se încheie
   await Promise.all(memberUpdatePromises);
-
-
-
-
-
   setLoading(false);
   alert("Uploaded file!");
 }

@@ -163,47 +163,47 @@ function Profile() {
     upload(photo, currentUser, setLoading);
 
     ///Facem update si la ride urile ale caror e creator
-    const q = query(collection(db, 'Ride'), where('creator_id', '==', currentUser.uid));
-    const querySnapshot = await getDocs(q);
+    // const q = query(collection(db, 'Ride'), where('creator_id', '==', currentUser.uid));
+    // const querySnapshot = await getDocs(q);
 
-    const updatePromises = [];
+    // const updatePromises = [];
 
-    querySnapshot.forEach((doc) => {
-      const rideRef = doc.ref;
+    // querySnapshot.forEach((doc) => {
+    //   const rideRef = doc.ref;
 
-      // Adaugă promisiunea actualizării în array-ul de promisiuni
-      updatePromises.push(updateDoc(rideRef, { creator_photo_url: photoURL }));
-    });
+    //   // Adaugă promisiunea actualizării în array-ul de promisiuni
+    //   updatePromises.push(updateDoc(rideRef, { creator_photo_url: photoURL }));
+    // });
 
-    // Așteaptă ca toate promisiunile de actualizare să se încheie
-    await Promise.all(updatePromises);
+    // // Așteaptă ca toate promisiunile de actualizare să se încheie
+    // await Promise.all(updatePromises);
 
-    // Facem update și la ride-urile ale căror e membru
-    const memberQuery = query(collection(db, 'Ride'), where('members', 'array-contains', currentUser.uid));
-    const memberQuerySnapshot = await getDocs(memberQuery);
+    // // Facem update și la ride-urile ale căror e membru
+    // const memberQuery = query(collection(db, 'Ride'), where('members', 'array-contains', currentUser.uid));
+    // const memberQuerySnapshot = await getDocs(memberQuery);
 
-    const memberUpdatePromises = memberQuerySnapshot.docs.map(async (doc) => {
-      const rideRef = doc.ref;
-      console.log(`CREATORRRRRR IDDDDD: ${doc.data.creator_id}`);
+    // const memberUpdatePromises = memberQuerySnapshot.docs.map(async (doc) => {
+    //   const rideRef = doc.ref;
+    //   console.log(`CREATORRRRRR IDDDDD: ${doc.data.creator_id}`);
 
-      if (doc.data().members && Array.isArray(doc.data().members)) {
-        const updatedMembers = doc.data().members.map((member) => {
-          if (member.memberId === currentUser.uid) {
-            console.log(`Member IDDDDD: ${currentUser.uid}`);
-            return { ...member, memberURL: photoURL };
-          }
-          return member;
-        });
+    //   if (doc.data().members && Array.isArray(doc.data().members)) {
+    //     const updatedMembers = doc.data().members.map((member) => {
+    //       if (member.memberId === currentUser.uid) {
+    //         console.log(`Member IDDDDD: ${currentUser.uid}`);
+    //         return { ...member, memberURL: photoURL };
+    //       }
+    //       return member;
+    //     });
 
-        // Actualizează câmpul "members" în Firestore
-        await updateDoc(rideRef, { members: updatedMembers });
-      } else {
-        console.error('members nu este definit sau nu este un array', doc.id);
-      }
-    });
+    //     // Actualizează câmpul "members" în Firestore
+    //     await updateDoc(rideRef, { members: updatedMembers });
+    //   } else {
+    //     console.error('members nu este definit sau nu este un array', doc.id);
+    //   }
+    // });
 
-    // Așteaptă ca toate promisiunile de actualizare să se încheie
-    await Promise.all(memberUpdatePromises);
+    // // Așteaptă ca toate promisiunile de actualizare să se încheie
+    // await Promise.all(memberUpdatePromises);
   }
 
   return (
