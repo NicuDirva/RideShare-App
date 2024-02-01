@@ -284,7 +284,7 @@ function HomePage() {
             {showCreateRideForm ? (
               <CreateRideForm onSubmit={[handleCreateRideSubmit, handleAddRide]} onActivate={handleActivate} />
             ) : (
-              <button className='my-button' onClick={handleCreateRide}>Creează Ride</button>
+              <button className='my-button' onClick={handleCreateRide}>Create Ride</button>
             )}
 
             <div className='rides-container'>
@@ -314,7 +314,7 @@ function HomePage() {
                             />
                             {authUser && ride.data.creator_id === authUser.uid && (
                               <div>
-                                <button onClick={() => handleRemoveMember(ride.id, member.memberId)}>Elimină Membru</button>
+                                <button onClick={() => handleRemoveMember(ride.id, member.memberId)}>Remove member!</button>
                               </div>
                             )}
                           </div>
@@ -331,17 +331,17 @@ function HomePage() {
                   <div className='second-div'>
                     <div><p>Departure time: {ride.data.departure_time}</p></div>
                     {(ride.data.available_seats > ride.data.members.length && ride.data.creator_id !== authUser.uid && (!ride.data.members || !ride.data.members.some(member => member.memberId === authUser.uid))) ? (
-                      <button onClick={() => handleJoinRide(ride.id)}>Alatura-te!</button>
+                      <button onClick={() => handleJoinRide(ride.id)}>Join!</button>
                     ) : null}
                     {!(!ride.data.members || !ride.data.members.some(member => member.memberId === authUser.uid)) ? (
-                      <button onClick={() => handleCancelJoinRide(ride.id)}>Anuleaza!</button>
+                      <button onClick={() => handleCancelJoinRide(ride.id)}>Cancel!</button>
                     ) : null}
                     <div><p>Arrival time: {ride.data.arrival_time}</p></div>
                   </div>
                   <div className='third-div'>
                     <div><p>Number of seats: {ride.data.available_seats}</p></div>
                     {authUser && ride.data.creator_id === authUser.uid && (
-                      <button onClick={() => handleDeleteRide(ride.id)}>Șterge Ride</button>
+                      <button onClick={() => handleDeleteRide(ride.id)}>Delete Ride</button>
                     )}
                     <div><p>Date: {ride.data.departure_data}</p></div>
                   </div>
